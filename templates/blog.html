@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}
+    <title>
+         Blog
+    </title>
+    {% endblock %}
+    
+{% load timesince_filter %}    
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8"> 
+          <div class="container">
+            <div class="row">
+              <!-- post -->
+              {% for article in article_list %}
+              <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{article.get_absolute_url}}"><img src="{{ article.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
+                      <div class="category">
+                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                       </div>
+                  </div><a href="{{article.get_absolute_url}}">
+                    <h3 class="h4">{{ article.title }}</h3></a>
+                  <p class="text-muted">{{ article.overview }}</p>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="{{article.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{{ article.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>{{ article.author.user.username }}</span></div>
+                    </a>
+                    <div class="views"><i class="icon-eye"></i>{{ article.views }}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ article.comment_count }}</div>
+                  </footer>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- Pagination -->
+            {% if article_list %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-template d-flex justify-content-center">
+                  {% if article_list.has_previous %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                  {% endif %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.number }}" class="page-link active">{{ article_list.number }}</a></li>
+                  {% if article_list.has_next %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
+          </div><br><br>
+          
+          
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- hashstrix ad unit 3 H ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="4424831489"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+          
+        </main>
+          <!-- sidebar-->
+        {% include 'sidebar.html' with most_recent=most_recent category_count=category_count tags=tags %}
+      </div>
+    </div>
+
+  {% endblock content %}

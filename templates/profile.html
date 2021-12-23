@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}
+    <title>
+         Profile (@{{ profile.author.user.username }})
+    </title>
+    {% endblock %}
+
+{% load timesince_filter %}
+{% block content %}
+
+<style>
+
+body {
+  background: #F1F3FA;
+}
+
+/* Profile container */
+.profile {
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+.avatar-wrapper-pp{
+    float: none;
+    margin-left: 24%;
+}
+
+.profile-userpic img {
+  width: 150px;
+  height: 150px;
+  -webkit-border-radius: 50% !important;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+
+a, button, code, div, img, input, label, li, p, pre, select, span, svg, table, td, textarea, th, ul {
+    -webkit-border-radius: 0!important;
+    -moz-border-radius: 0!important;
+    border-radius: 0!important;
+}
+.dashboard-stat, .portlet {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.portlet {
+    margin-top: 0;
+    margin-bottom: 25px;
+    padding: 0;
+    border-radius: 4px;
+}
+.portlet.bordered {
+    border-left: 2px solid #e6e9ec!important;
+}
+.portlet.light {
+    padding: 12px 20px 15px;
+    background-color: #fff;
+}
+.portlet.light.bordered {
+    border: 1px solid #e7ecf1!important;
+}
+.list-separated {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.profile-stat {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f4f7;
+}
+.profile-stat-title {
+    color: #7f90a4;
+    font-size: 25px;
+    text-align: center;
+}
+.uppercase {
+    text-transform: uppercase!important;
+}
+
+.profile-stat-text {
+    color: #5b9bd1;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+.profile-desc-title {
+    color: #7f90a4;
+    font-size: 17px;
+    font-weight: 600;
+}
+.profile-desc-text {
+    color: #7e8c9e;
+    font-size: 14px;
+}
+.margin-top-20 {
+    margin-top: 20px!important;
+}
+[class*=" fa-"]:not(.fa-stack), [class*=" glyphicon-"], [class*=" icon-"], [class^=fa-]:not(.fa-stack), [class^=glyphicon-], [class^=icon-] {
+    display: inline-block;
+    line-height: 14px;
+    -webkit-font-smoothing: antialiased;
+}
+.profile-desc-link i {
+    width: 22px;
+    font-size: 19px;
+    color: #abb6c4;
+    margin-right: 5px;
+}
+
+</style>
+
+
+
+
+<div class="container">
+    <div class="row profile">
+    <div class="col-md-4">
+      <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+          <div class="avatar-wrapper-pp">
+            <div class="profile-userpic">
+              <img src="{{ profile.author.profile_picture.url }}" class="img-responsive" alt="">
+            </div>
+          </div>
+        <!-- END SIDEBAR USERPIC -->
+        <!-- SIDEBAR USER TITLE -->
+        <div class="profile-usertitle">
+          <div class="profile-usertitle-name">
+            {{ profile.author.user.first_name }}&nbsp;{{ profile.author.user.last_name }}
+              {% if profile.author.verified %}
+                  <span class="fa fa-stack fa-sm" style="">
+                    <i class="fa fa-certificate fa-stack-2x" style="color: #2b90d9;font-size: 20px;margin-top:8px;"></i>
+                    <i class="fa fa-check fa-stack-1x fa-inverse" style="font-size: 10px;margin-top:8px;"></i>
+                  </span>
+              {% endif %}
+          </div>
+          <div class="profile-usertitle-job">
+            @{{ profile.author.user.username }}
+          </div>
+        </div>
+        <!-- END SIDEBAR USER TITLE -->
+        <!-- SIDEBAR BUTTONS  -->
+        {% if request.user != profile.author.user %}
+            <div class="profile-userbuttons">
+          {% if follow_status %}
+          <button type="button" name="unfollow" onclick="window.location.href='?unfollow=1'" class="btn btn-primary btn-sm">Following</button>
+          {% else %}
+          <button type="button" name="follow" onclick="window.location.href='?follow=1'" class="btn btn-primary btn-sm">Follow</button>
+          {% endif %}
+            </div>
+        {% endif %}
+        <!-- END SIDEBAR BUTTONS -->
+        <br>
+        <!-- SIDEBAR MENU -->
+        {% if request.user == profile.author.user %}
+        <div class="profile-usermenu">
+          <ul class="nav">
+            <li class="active">
+              <a href="#">
+              <i class="glyphicon glyphicon-home"></i>
+              Overview </a>
+            </li>
+            <li>
+              <a href="{% url 'profile:settings' %}">
+              <i class="glyphicon glyphicon-user"></i>
+              Account Settings </a>
+            </li>
+            <li>
+              <a href="{% url 'how-it-works' %}">
+              <i class="glyphicon glyphicon-flag"></i>
+              Help </a>
+            </li>
+          </ul>
+        </div>
+        {% endif %}
+        <!-- END MENU -->
+        
+           <div class="portlet light bordered">
+                                                <!-- STAT -->
+                                                <div class="row list-separated profile-stat">
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> {{followers|length}} </div>
+                                                        <div class="uppercase profile-stat-text"> Followers </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> {{post_view}} </div>
+                                                        <div class="uppercase profile-stat-text"> Views </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> {{total_blogs}} </div>
+                                                        <div class="uppercase profile-stat-text"> Blogs </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END STAT -->
+                                                 <div>
+                                                    {% if profile.bio %}
+                                                        {% if request.user != profile.author.user %}
+                                                            <h4 class="profile-desc-title">About {{profile.author.user.username|capfirst }}</h4>
+                                                        {% else %}
+                                                            <h4 class="profile-desc-title">My Bio</h4>
+                                                         {% endif %}
+                                                        <span class="profile-desc-text"> {{profile.bio}} </span>
+                                                     {% endif %}
+                                                    {% if profile.link1 %}
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <i class="fa fa-globe"></i>
+                                                        <a href="{{profile.link1}}">{{profile.link1}}</a>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if profile.link2 %}
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <i class="fa fa-globe"></i>
+                                                        <a href="{{profile.link2}}">{{profile.link2}}</a>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if profile.linkedin %}
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <a href="{{profile.linkedin}}">
+                                                            <i class="fa fa-linkedin">&nbsp;Linkedin</i>
+                                                        </a>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if profile.youtube %}
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <a href="{{profile.youtube}}">
+                                                            <i class="fa fa-youtube">&nbsp;YouTube</i>
+                                                        </a>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                               </div>
+
+
+
+      </div>
+    </div>
+    <div class="col-md-8">
+            <div class="profile-content">
+
+
+        <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-12">
+          <div class="container">
+          {% if blogs|length != 0 %}
+            <div class="row">
+              <!-- post -->
+              {% for article in blogs %}
+              <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{article.get_absolute_url}}"><img src="{{ article.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
+                      <div class="category">
+                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                       </div>
+                  </div><a href="{{article.get_absolute_url}}">
+                    <h3 class="h4">{{ article.title }}</h3></a>
+                  <p class="text-muted">{{ article.overview }}</p>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="{{article.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{{ article.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>{{ article.author.user.username }}</span></div>
+                    </a>
+                    <div class="views"><i class="icon-eye"></i>{{ article.views }}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ article.comment_count }}</div>
+                    {% if request.user == article.author.user %}
+                      <div class="comments meta-last">&nbsp;| {{ article.status }}</div>
+                    {% endif %}
+                  </footer>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+                <div class="text-center">
+                    <br><br>
+                <img src="{% static 'img/page-blank.svg' %}" style="width:20%; color:grey;">
+                <h2 style="color:#C8C8C8;padding-top:5%;">No Blogs Yet</h2>
+                </div>
+            {% endif %}            
+            <!-- Pagination -->
+            {% if blogs %}
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination pagination-template d-flex justify-content-center">
+                    {% if blogs.has_previous %}
+                    <li class="page-item"><a href="?{{ page_request_variable }}={{ blogs.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                    {% endif %}
+                    <li class="page-item"><a href="?{{ page_request_variable }}={{ blogs.number }}" class="page-link active">{{ blogs.number }}</a></li>
+                    {% if blogs.has_next %}
+                    <li class="page-item"><a href="?{{ page_request_variable }}={{ blogs.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+            {% endif %}
+          </div>
+        </main>
+      </div>
+
+            </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

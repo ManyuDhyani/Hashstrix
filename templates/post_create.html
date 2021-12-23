@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+    {% block title %}
+    <title>
+         {{ title }}
+    </title>
+    {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+.cke_maximized {
+    z-index: 10000 !important;
+    top: 10%!important;
+}
+</style>
+
+<div class="col-8 offset-2 mt-5 mb-5">
+    <h3>{{ title }} a Blog</h3>
+    {{ form.media }}
+    <form action="." method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+
+
+{% endblock content %}

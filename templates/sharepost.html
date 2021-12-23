@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+    {% block title %}
+    <title>
+         Share Post
+    </title>
+    {% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="col-12">
+    <br>
+        <p><strong>Please, use this form to share the Post:</strong></p>
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                        {{form.to|as_crispy_field}}
+                        <div class="form-group small text-muted">
+                            For multiple emails enter comma (,) separated email IDs. Example: john@gmail.com, emma@gmail.com
+                        </div>
+                		{% if form.to.errors %}
+                            {% for error in form.to.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {{form.message|as_crispy_field}}
+                		{% if form.message.errors %}
+                            {% for error in form.message.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if request.user.is_anonymous %}
+                            {{form.name|as_crispy_field}}
+                            {% if form.name.errors %}
+                                {% for error in form.name.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+
+                  {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                          {% if message.tags == "success" %}
+                              {% if forloop.last %}
+                                <p class="alert alert-success">{{ message }}</p>
+                              {% endif %}
+                          {% endif %}
+
+                          {% if message.tags == "error" %}
+                              {% if forloop.last %}
+                                <p class="alert alert-danger">{{ message }}</p>
+                              {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                    </ul>
+                  {% endif %}
+                  
+                <button type="submit" name="send" class="btn btn-primary">Share</button>
+                <a href="{{post.get_absolute_url}}"  class="btn btn-primary">Back to Post</a>
+            </form>
+            <br>
+            <br>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+    {% block title %}
+    <title>
+         Trending
+    </title>
+    {% endblock %}
+    
+{% load trending_filter %}
+{% load timesince_filter %} 
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-12">
+          <div class="container">
+            <div class="row">
+    <section class="featured-posts no-padding-top">
+        <!-- Post-->
+        {% for obj in article_list %}
+
+        <div class="row d-flex align-items-stretch">
+          {% if forloop.counter|modulo:2 %}
+          <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+          {% endif %}
+          <div class="text col-lg-7">
+            <div class="text-inner d-flex align-items-center">
+              <div class="content">
+                <header class="post-header">
+                  <div class="category">
+                    <a href="{% url 'post_list_by_category' obj.category.slug %}">{{ obj.category }}</a>
+                  </div><a href="{{obj.get_absolute_url}}">
+                    <h2 class="h4">{{obj.title}}</h2></a>
+                </header>
+                <p>{{ obj.overview }}</p>
+                <footer class="post-footer d-flex align-items-center"><a href="{{obj.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="{{ obj.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>{{ obj.author }}</span></div></a>
+                  <div class="date"><i class="icon-clock"></i>{{ obj.timestamp|timesince|upto:',' }} ago</div>
+                  <div class="comments"><i class="icon-eye"></i>{{ obj.views }}</div>
+                </footer>
+              </div>
+            </div>
+          </div>
+          {% if not forloop.counter|modulo:2 %}
+            <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <br>
+            <!-- Pagination -->
+            {% if article_list %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-template d-flex justify-content-center">
+                  {% if article_list.has_previous %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                  {% endif %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.number }}" class="page-link active">{{ article_list.number }}</a></li>
+                  {% if article_list.has_next %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
+    </section>
+          </div>
+          </div>
+        
+        
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- hashstrix ad unit 3 H -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="4424831489"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        
+        </main>
+        
+      </div>
+    </div>
+
+{% endblock content %}

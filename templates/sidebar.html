@@ -1,0 +1,169 @@
+<style>
+    /* Style the buttons */
+.mbtn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Style the active class (and buttons on mouse-over) */
+.mactive, .mbtn:hover {
+  background-color: #2b90d9;
+  color: white;
+}
+</style>
+<aside class="col-lg-4">
+        {% if most_recent and user.is_authenticated %}
+            <div class="widget search blog-feed">
+                <header>
+                    <h3 class="h6">Blog Feed</h3>
+                </header>
+
+            <form action="" class="search-form" method="GET">
+              <div class="form-group">
+                <select name="feed" class="custom-select">
+                  <option value="world" selected>From the World</option>
+                  <option value="following">From the Following</option>
+                </select>
+                <button type="submit" class="btn-primary">Go</button>
+              </div>
+            </form>
+
+            </div>
+        {% endif %}
+          <!-- Widget [Search Bar Widget]-->
+          <div class="widget search">
+            <header>
+              <h3 class="h6">Search the blog</h3>
+            </header>
+            <form action="{% url 'search' %}" class="search-form">
+              <div class="form-group">
+                <input type="text" name="search" placeholder="What are you looking for?">
+                <select name="category" class="custom-select">
+                  <option value="blog" selected>Blog</option>
+                  <option value="account">Account</option>
+                </select>
+                <button type="submit" class="submit"><i class="icon-search"></i></button>
+              </div>
+            </form>
+          </div>
+          <!-- Widget [Latest Posts Widget]        -->
+    {% if most_recent %}
+          <div class="widget latest-posts">
+            <header>
+              <a href="{% url 'latest' %}"><h3 class="h6">Latest Posts&nbsp;&nbsp;<small><i class="fa fa-long-arrow-right"></i>More</small></h3></a>
+            </header>
+            <div class="blog-posts">
+                {% for blog in most_recent %}
+                <a href="{{blog.get_absolute_url}}">
+                <div class="item d-flex align-items-center">
+                  <div class="image"><img src="{{ blog.thumbnail.url }}" alt="..." class="img-fluid"></div>
+                  <div class="title"><strong>{{ blog.title }}</strong>
+                    <div class="d-flex align-items-center">
+                      <div class="views"><i class="icon-eye"></i>{{ blog.views }}</div>
+                      <div class="comments"><i class="icon-comment"></i>{{ blog.comment_count }}</div>
+                    </div>
+                  </div>
+                </div>
+            </a>
+            {% endfor %}
+            </div>
+          </div>
+    {% else %}
+          {% if similar_posts|length != 0 %}
+            <div class="widget latest-posts">
+            <header>
+              <h3 class="h6">Similar Posts</h3>
+            </header>
+            <div class="blog-posts">
+                {% for blog in similar_posts %}
+                <a href="{{blog.get_absolute_url}}">
+                <div class="item d-flex align-items-center">
+                  <div class="image"><img src="{{ blog.thumbnail.url }}" alt="..." class="img-fluid"></div>
+                  <div class="title"><strong>{{ blog.title }}</strong>
+                    <div class="d-flex align-items-center">
+                      <div class="views"><i class="icon-eye"></i>{{ blog.views }}</div>
+                      <div class="comments"><i class="icon-comment"></i>{{ blog.comment_count }}</div>
+                    </div>
+                  </div>
+                </div>
+            </a>
+            {% endfor %}
+            </div>
+            </div>
+         {% endif %}
+    {% endif %}
+          <!-- Widget [Categories Widget]-->
+          <div class="widget categories">
+            <header>
+              <h3 class="h6">Trending Categories</h3>
+            </header>
+            {% for category in category_count %}
+            <div class="item d-flex justify-content-between"><a href="{% url 'post_list_by_category' category.category__slug %}">{{ category.category__title }}</a><span>{{ category.trend_count }}</span></div>
+            {% endfor %}
+          </div>
+          <!-- Widget [Tags Cloud Widget]-->
+          <div class="widget tags">
+              <!-- If most_recent dict is coming it means its a blog page, otherwise post page-->
+              {% if most_recent %}
+            <header>
+              <h3 class="h6">Treanding Tags</h3>
+            </header>
+            <ul class="list-inline">
+                {% for tag in tags %}
+                <li class="list-inline-item"><a href="{% url 'post_list_by_tag' tag.tags__slug %}" class="tag">{{tag.tags__name}}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <header>
+              <h3 class="h6">Post's Tags</h3>
+            </header>
+            <ul class="list-inline">
+                {% for tag in tags %}
+                <li class="list-inline-item"><a href="{% url 'post_list_by_tag' tag.tags__slug %}" class="tag">{{tag.tags__name}}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          
+          
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- hashStrix ad unit 2 V ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="8364076494"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>      
+          
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Unit 4 for home ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="7582423388"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>   
+          
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Unit 3 for home ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="2143228599"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script> 
+          
+          
+        </aside>

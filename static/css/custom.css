@@ -1,0 +1,77 @@
+/* your styles go here */
+
+.manyu{
+    background-color: white;
+    border: 1px solid transparent;
+    border-color: #f1f1f1;
+    color: black;
+    cursor: pointer;
+    border-color: white;
+}
+
+.manyu:hover{
+    color: black;
+    border-color: black;
+    transition-duration: 0.4s;
+}
+
+.notification {
+  color: #000000;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  margin-left: 10px;
+}
+
+.notification:hover {
+  background: #fff;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: #2b90d9;
+  color: #fff;
+}
+
+.same{
+    text-decoration: none;
+    color: blanchedalmond;
+}
+
+.same:hover{
+    background: var(--nav-hover);
+}
+
+.about-content{
+    display: none;
+    text-align: center;
+    position: absolute;
+    width: 16rem;
+    top: 75%;
+    z-index: 10000 !important;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2),
+                0 0 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.same-about{
+    text-decoration: none;
+    color: #000;
+    display: block;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+}
+
+.same-about:hover{
+    color: #2b90d9;
+    text-decoration: none;
+}
+
+.link1:hover + .about-content,
+.about-content:hover{
+    display: block;
+}

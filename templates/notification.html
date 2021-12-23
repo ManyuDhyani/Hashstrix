@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+    {% block title %}
+    <title>
+         Notifications
+    </title>
+    {% endblock %}
+
+{% load timesince_filter %}
+{% block content %}
+<style>
+    .avatar-wrapper-pp{
+        float: none;
+    }
+    .profile-userpic img {
+      width: 50px;
+      height: 50px;
+      -webkit-border-radius: 50% !important;
+      margin: 20px;
+
+      object-fit: cover;
+      object-position: center right;
+    }
+   .thumbnail-pic img {
+      width: 60px;
+      height: auto;
+      margin: 20px;
+      margin-top: 20px;
+
+      object-fit: cover;
+      object-position: center right;
+    }
+</style>
+    <div class="container">
+      <div class="col-12"><br>
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Notifications</h6>
+            {% for notification in notifications %}
+                <div class="d-flex text-muted pt-3">
+                    <div class="avatar-wrapper-pp">
+                        <div class="profile-userpic">
+                            <a href="{{notification.sender.get_absolute_url}}"><img class="avatar" src="{{ notification.sender.profile_picture.url }}"></a>
+                        </div>
+                    </div>
+
+                  <p class="pb-3 mb-0 small lh-sm border-bottom">
+                      <strong class="d-block text-gray-dark my-3"><a href="{{notification.sender.get_absolute_url}}">@{{notification.sender.user.username}}</a></strong>
+
+                      {% if notification.notification_type == 1 %}
+                        Liked your Blog ❤️
+                        <br><small class="my-5">{{notification.date|timesince|upto:',' }}</small>
+                        &nbsp;<a href="{% url 'delete-notification' notification.id %}" class="secondary-content"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg></a>️
+                        <div class="avatar-wrapper-pp">
+                            <div class="thumbnail-pic">
+                                <a href="{% url 'post-detail' notification.post.slug %}"><img class="avatar" src="{{ notification.post.thumbnail.url }}"></a>
+                            </div>
+                        </div>
+
+                    {% elif notification.notification_type == 2 %}
+                        Commented "{{ notification.text_preview | truncatechars:50 }}" on your Blog.
+                        <br><small class="my-5">{{notification.date|timesince|upto:',' }}</small>
+                        &nbsp;<a href="{% url 'delete-notification' notification.id %}" class="secondary-content"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg></a>
+                        <div class="avatar-wrapper-pp">
+                            <div class="thumbnail-pic">
+                                <a href="{% url 'post-detail' notification.post.slug %}"><img class="avatar" src="{{ notification.post.thumbnail.url }}"></a>
+                            </div>
+                        </div>
+
+                    {% elif notification.notification_type == 3 %}
+                        Started Following you
+                        <br><small class="my-5">{{notification.date|timesince|upto:',' }}</small>
+                        &nbsp;<a href="{% url 'delete-notification' notification.id %}" class="secondary-content"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg></a>
+                        
+                    {% elif notification.notification_type == 4 %}
+                        Replied "{{ notification.text_preview | truncatechars:50 }}" on your Comment.
+                        <br><small class="my-5">{{notification.date|timesince|upto:',' }}</small>
+                        &nbsp;<a href="{% url 'delete-notification' notification.id %}" class="secondary-content"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg></a>
+                        <div class="avatar-wrapper-pp">
+                            <div class="thumbnail-pic">
+                                <a href="{% url 'post-detail' notification.post.slug %}"><img class="avatar" src="{{ notification.post.thumbnail.url }}"></a>
+                            </div>
+                        </div>
+                        
+                    {% endif %}
+                  </p>
+                </div>
+            {% endfor %}
+
+            <!-- Pagination -->
+            {% if notifications %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-template d-flex justify-content-center">
+                  {% if notifications.has_previous %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ notifications.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                  {% endif %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ notifications.number }}" class="page-link active">{{ notifications.number }}</a></li>
+                  {% if notifications.has_next %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ notifications.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% else %}
+            <div class="jumbotron jumbotron-fluid">
+              <div class="container">
+                <h4 class="display-4 text-center">No Notification</h4>
+              </div>
+            </div>
+           {% endif %}
+  </div>
+          <br>
+      </div>
+    </div>
+
+{% endblock content %}

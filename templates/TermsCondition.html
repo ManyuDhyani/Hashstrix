@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+    {% block title %}
+    <title>
+         Terms & Condition
+    </title>
+    {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-12">
+            {{ obj.content | safe }}
+        </div>
+    </div>
+{% endblock content %}

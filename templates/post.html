@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}
+    <title>
+         Post
+    </title>
+    {% endblock %}
+    
+{% load timesince_filter %}
+{% block content %}
+
+<style>
+    section {
+      padding: 0 0;
+    }
+    img {
+      max-width: 100%;
+      height: auto !important;
+    }
+</style>
+
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8"> 
+          <div class="container">
+            <div class="post-single">
+              <div class="post-thumbnail"><img src="{{ blog.thumbnail.url }}" alt="..." class="img-fluid"></div>
+              <div class="post-details">
+                <div class="post-meta d-flex justify-content-between">
+                  <div class="category">
+                    <a href="{% url 'post_list_by_category' blog.category.slug %}">{{ blog.category.title }}</a>
+                  </div>
+
+                  <!-- Default Action Links -->
+                  <div class="category">
+                    <div class="btn-group dropleft">
+                      <a type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                      </a>
+                      <div class="dropdown-menu text-center">
+                        <!-- Dropdown menu links -->
+                        <a href="{% url 'share' slug=blog.slug %}"><strong><i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share this Post</strong></a>
+                        {% if user.is_authenticated and request.user.username == blog.author.user.username %}
+                          <div class="dropdown-divider"></div>
+                          <a href="{% url 'post-update' slug=blog.slug %}"><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Update</strong></a><br>
+                          <div class="dropdown-divider"></div>
+                          <a a class="confirm-delete" href="{% url 'post-delete' slug=blog.slug %}"><strong><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</strong></a>
+                        {% endif %}
+                      </div>
+                    </div>
+                    </div>
+
+                </div>
+                <h1>{{ blog.title }}<a href="{% url 'share' slug=blog.slug %}"><i class="fa fa-share"></i></a></h1>
+                <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="{{blog.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="{{ blog.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>{{ blog.author.user.username }}</span></div></a>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <div class="date"><i class="icon-clock"></i>{{ blog.timestamp|timesince|upto:',' }} ago</div>
+                    <div class="views"><i class="icon-eye"></i>{{ blog.views }}</div>
+                    <div class="comments meta-last like-count{{blog.slug}}"> <i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;{{blog.num_likes}}&nbsp;|&nbsp;</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ blog.comment_count }}</div>
+                    {% if edited %}
+                    <div class="comments meta-last">&nbsp;|&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edited</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="post-body component">
+                  {{ blog.content | safe }}
+                </div>
+                <div class="post-tags">
+                  {% for tag in tags %}
+                    <a href="{% url 'post_list_by_tag' tag.tags__slug %}" class="tag">#{{tag.tags__name}}</a>
+                  {% endfor %}
+                </div><br>
+                
+                <!--like--------->
+                {% if user.is_authenticated %}
+                <div class="right floated text-center">
+                    <form action="{% url 'like-post-view' %}" method="POST" class='like-form' slug='{{blog.slug}}'>
+                        {% csrf_token %}
+                        <input type="hidden" name="post_slug" value={{blog.slug}}>
+
+                            <button type="submit" class="btn btn-primary ui button like-btn{{blog.slug}}">
+                                {% if visited_user not in blog.liked.all %}
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;Like
+                                {% else %}
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;Unlike
+                                {% endif %}
+                            </button>
+                    </form>
+                </div>
+                {% endif %}
+                <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                  {% if blog.previous_post %}
+                  <a href="{{ blog.previous_post.get_absolute_url }}" class="prev-post text-left d-flex align-items-center">
+                    <div class="icon prev"><i class="fa fa-angle-left"></i></div>
+                    <div class="text"><strong class="text-primary">Previous Post </strong>
+                      <h6>{{ blog.previous_post.title }}</h6>
+                    </div></a>
+                  {% endif %}
+                  {% if blog.next_post %}
+                  <a href="{{ blog.next_post.get_absolute_url }}" class="next-post text-right d-flex align-items-center justify-content-end">
+                    <div class="text"><strong class="text-primary">Next Post </strong>
+                      <h6>{{ blog.next_post.title }}</h6>
+                    </div>
+                    <div class="icon next"><i class="fa fa-angle-right">   </i></div></a>
+                  {% endif %}
+                </div>
+                
+                <!--Google Ad Horizontal---->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- hashstrix ad unit 3 H -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2628743927618961"
+                     data-ad-slot="4424831489"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                
+                <div class="post-comments">
+                  <header>
+                    <h3 class="h6">Post Comments<span class="no-of-comments">({{ blog.comments.count }})</span></h3>
+                  </header>
+                  {% for comment in blog.get_comments %}
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        <div class="image"><img src="{{ comment.author.profile_picture.url }}" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="title"><strong><a href="{{comment.author.get_absolute_url}}">{{ comment.author.user.username }}</a></strong><span class="date">{{ comment.timestamp | timesince|upto:','}} ago</span></div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p>{{ comment.content }}</p>
+                      <footer class="small"><a class="comment-reply-btn" href="#">{% if comment.children.count > 0 and comment.children.count < 2 %} View 1 Reply{% elif comment.children.count > 1 %}View {{comment.children.count}} Replies{% endif %}</a>{% if comment.children.count > 0 %}&nbsp;|{% endif %}<a class="comment-reply-btn" href="#">&nbsp;Reply&nbsp;</a> {% if request.user.is_authenticated and request.user == comment.author.user %} |<a class="confirm-delete" href='/comment?id={{comment.id}}'>&nbsp;Delete</a> {% endif %} </footer>
+
+                            <div class="comment-reply" style="display:None;">
+                              {% for child_comment in comment.children %}
+                                  <div class="comment-header d-flex justify-content-between">
+                                    <div class="user d-flex align-items-center">
+                                      <div class="image"><img src="{{ child_comment.author.profile_picture.url }}" alt="..." class="img-fluid rounded-circle"></div>
+                                      <div class="title"><strong><a href="{{child_comment.author.get_absolute_url}}">{{ child_comment.author.user.username }}</a></strong><span class="date">{{ child_comment.timestamp|timesince|upto:',' }} ago</span></div>
+                                    </div>
+                                  </div>
+                                  <div class="comment-body">
+                                    </p>{{child_comment.content}}</p>
+                                    {% if request.user.is_authenticated and request.user == child_comment.author.user %}
+                                    <footer class="small"><a class="confirm-delete" href='/comment?id={{child_comment.id}}'>Delete</a></footer>
+                                    {% endif %}
+                                  </div>
+                              {% endfor %}
+
+                              {% if request.user.is_authenticated %}
+                              <form action="." method="POST">
+                              {% csrf_token %}
+                              {{form.as_p}}
+                              <input type="hidden" name="parent_id" value="{{comment.id}}">
+                              <button type="submit" value="Reply" class="btn btn-secondary">Reply</button>
+                              </form>
+                              {% endif %}
+
+                            </div>
+                    </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="add-comment">
+                  <header>
+                    <h3 class="h6">Leave a Comment</h3>
+                  </header>
+                  <form action="." method ="POST" class="commenting-form">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        {{ form.content }}
+                      </div>
+                      <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                {% else %}
+                  <a href="{% url 'account_login' %}" class="btn btn-primary">Login to Comment</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </main>
+        {% include 'sidebar.html' with similar_posts=similar_posts category_count=category_count post=blog tags=tags %}
+      </div>
+    </div>
+
+{% endblock content %}

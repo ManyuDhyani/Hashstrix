@@ -1,0 +1,57 @@
+{% load static %}
+<style>
+    img {
+    max-width: 100%;
+    height: auto !important;
+    }
+</style>
+    <!-- Page Footer-->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="contact-details">
+                <img src="{% static 'img/HashStrix.png' %}">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="menus d-flex">
+              <ul class="list-unstyled">
+                <li> <a href="{% url 'profile:account_login' %}">My Account</a></li>
+                <li> <a href="{% url 'terms-and-condition' %}">Terms &amp; Condition</a></li>
+                <li> <a href="{% url 'community-guidelines' %}">Community Guidelines</a></li>
+                <li> <a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
+              </ul>
+              <ul class="list-unstyled">
+                <li> <a href="{% url 'blog-list' %}">Blogs</a></li>
+                <li> <a href="{% url 'post-create' %}">Create a Blog</a></li>
+                <li> <a href="{% url 'trending' %}">Trending</a></li>
+                <li> <a href="{% url 'how-it-works' %}">How It Works</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+                <ul class="social-menu">
+                <li class="list-inline-item"><a href="https://www.facebook.com/hashstrix.blogs"><i class="fa fa-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="https://twitter.com/StrixHash"><i class="fa fa-twitter"></i></a></li>
+                <li class="list-inline-item"><a href="https://www.instagram.com/hashstrix/"><i class="fa fa-instagram"></i></a></li>
+                <li class="list-inline-item"><a href="https://www.youtube.com/channel/UC8vK_3IMInAxadBTMfSUriw"><i class="fa fa-youtube"></i></a></li>
+                <li class="list-inline-item"><a href="https://www.linkedin.com/in/hash-strix-6884a6218/"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="copyrights">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p>&copy; 2021. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-right">
+              <p><a href="/" class="text-white"><b>HashStrix - Made with <span style="font-size:140%;color:red;">&hearts;</span> In India</b></a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>

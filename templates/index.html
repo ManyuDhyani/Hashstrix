@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}
+    <title>
+         HashStrix
+    </title>
+    {% endblock %}
+ 
+{% load timesince_filter %}    
+{% block content %}
+    <!-- Hero Section-->
+    <section style="background: url({% static 'img/skys.jpg' %}); background-size: cover; background-position: center center" class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7">
+              <h1>{{quotes.line1}} {% if quotes.line2 %}<small class="form-text text-muted">{{quotes.line2}}</small>{% endif %}</h1><a href="{% url 'blog-list' %}" class="hero-link">Discover More</a>
+          </div>
+        </div><a href=".intro" class="continue link-scroll"><i class="fa fa-long-arrow-down"></i> Scroll Down</a>
+      </div>
+    </section>
+    <!-- Intro Section-->
+    <section class="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <h2 class="h3">Trending &nbsp <a href="{% url 'trending' %}" class="btn manyu"><i class="fa fa-long-arrow-right"></i>More</a></h2>
+            <p class="text-big">Discover latest <strong>Blogs, Articles, or Posts</strong> here <strong>from all over the world on HashStrix</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="featured-posts no-padding-top">
+      <div class="container">
+        <!-- Post-->
+        {% for obj in featured_list %}
+
+        <div class="row d-flex align-items-stretch">
+          {% if not forloop.first and not forloop.last %}
+          <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+          {% endif %}
+          <div class="text col-lg-7">
+            <div class="text-inner d-flex align-items-center">
+              <div class="content">
+                <header class="post-header">
+                  <div class="category">
+                    <a href="{% url 'post_list_by_category' obj.category.slug %}">{{ obj.category }}</a>
+                  </div><a href="{{obj.get_absolute_url}}">
+                    <h2 class="h4">{{obj.title}}</h2></a>
+                </header>
+                <p>{{ obj.overview }}</p>
+                <footer class="post-footer d-flex align-items-center"><a href="{{obj.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="{{ obj.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>{{ obj.author }}</span></div></a>
+                  <div class="date"><i class="icon-clock"></i>{{ obj.timestamp|timesince|upto:',' }} ago</div>
+                  <div class="comments"><i class="icon-eye"></i>{{ obj.views }}</div>
+                </footer>
+              </div>
+            </div>
+          </div>
+          {% if forloop.first or forloop.last %}
+          <div class="image col-lg-5"><img src="{{ obj.thumbnail.url }}" alt="..."></div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- Divider Section-->
+    <section style="background: url({% static 'img/divider-bg.jpg' %}); background-size: cover; background-position: center bottom" class="divider">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h2>{% if quotes.line3 %}<small class="form-text text-muted">{{quotes.line3}}</small>{% endif %} {{quotes.line4}}</h2><a href="{% url 'blog-list' %}" class="hero-link">View More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Latest Posts -->
+    <section class="latest-posts"> 
+      <div class="container">
+        <header> 
+          <h2>Latest from the blog &nbsp <a href="{% url 'latest' %}" class="btn manyu"><i class="fa fa-long-arrow-right"></i>More</a></h2>
+          <p class="text-big">Bring You the lastest Blogs from around the World.</p>
+        </header>
+        <div class="row">
+          {% for latest in latest_list %}
+          <div class="post col-md-4">
+            <div class="post-thumbnail"><a href="{{latest.get_absolute_url}}"><img src="{{latest.thumbnail.url}}" alt="..." class="img-fluid"></a></div>
+            <div class="post-details">
+              <div class="post-meta d-flex justify-content-between">
+                <div class="date">{{ latest.timestamp|timesince|upto:',' }} ago</div>
+                  <div class="category">
+                  <a href="{% url 'post_list_by_category' latest.category.slug %}">{{ latest.category }}</a>
+                  </div>
+              </div><a href="{{latest.get_absolute_url}}">
+                <h3 class="h4">{{ latest.title }}</h3></a>
+              <p class="text-muted">{{ latest.overview }}</p>
+            </div>
+          </div>
+        {% endfor%}
+        </div>
+      </div>
+    </section>
+    <!-- Newsletter Section-->
+    <section class="newsletter no-padding-top">    
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Subscribe to Newsletter</h2>
+            <p class="text-big">Subscribe for new Updates, Announcements and More.</p>
+          </div>
+          <div class="col-md-8">
+            <div class="form-holder">
+              <form action="." method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="email" name="email" id="email" placeholder="Type your email address">
+                  <button type="submit" class="submit">Subscribe</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Google ads section---->
+    <section class="gallery no-padding">    
+      <div class="row">
+      
+        <div class="mix col-lg-3 col-md-3 col-sm-6">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- hashstrix ad unit 1 ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="9147509271"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        
+        <div class="mix col-lg-3 col-md-3 col-sm-6">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Unit 2 for Home ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="1788005377"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>      
+        </div>
+        
+        <div class="mix col-lg-3 col-md-3 col-sm-6">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Unit 3 for home ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="2143228599"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        
+        <div class="mix col-lg-3 col-md-3 col-sm-6">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Unit 4 for home ---->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2628743927618961"
+               data-ad-slot="7582423388"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        
+      </div>
+    </section>
+{% endblock content %}

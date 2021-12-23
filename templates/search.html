@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load timesince_filter %}
+{% block content %}
+
+ <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+          <div class="container">
+            <div class="row">
+              <!-- post -->
+              {% if lb == 0 and la == 0 %}
+              <div class="post col-xl-6">
+              <h1 id="news-heading"><strong>Search Results</strong></h1>
+
+                <p>Your search -<b> {{query}} </b>- did not match any Blog or Account.<br>
+
+                <br>Suggestions:<br>
+                <br>•Make sure that all words are spelled correctly.
+                <br>•Try different keywords.
+                <br>•Try more general keywords.
+                <br>•Try fewer keywords.</p>
+              </div>
+              {% endif %}
+
+              {% if lb == 1 %}
+                {% for article in results %}
+                <div class="post col-xl-6">
+                  <div class="post-thumbnail"><a href="{{article.get_absolute_url}}"><img src="{{ article.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+                  <div class="post-details">
+                    <div class="post-meta d-flex justify-content-between">
+                      <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
+                      <div class="category"><a href="#">{{ article.category }}</a></div>
+                    </div><a href="{{article.get_absolute_url}}">
+                      <h3 class="h4">{{ article.title }}</h3></a>
+                    <p class="text-muted">{{ article.overview }}</p>
+                    <footer class="post-footer d-flex align-items-center">
+                      <a href="#" class="author d-flex align-items-center flex-wrap">
+                        <div class="avatar"><img src="{{ article.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                        <div class="title"><span>{{ article.author.user.username }}</span></div>
+                      </a>
+                      <div class="views"><i class="icon-eye"></i>{{ article.views }}</div>
+                      <div class="comments meta-last"><i class="icon-comment"></i>{{ article.comment_count }}</div>
+                    </footer>
+                  </div>
+                </div>
+                {% endfor %}
+              {% endif %}
+
+              {% if la == 1 %}
+                {% for account in results %}
+                <div class="post col-xl-6">
+                    <footer class="post-footer d-flex align-items-center">
+                      <a href="{{ account.author.get_absolute_url }}" class="author d-flex align-items-center flex-wrap">
+                        <div class="avatar"><img src="{{ account.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
+                        <div><span>{{ account.author.user.username }} &nbsp;</span></div>
+                        {% if account.location %}
+                          <div class="title"><span>| {{ account.location }}</span></div>
+                        {% endif %}
+                      </a>
+                    </footer>
+                </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <!-- Pagination -->
+            {% if results %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-template d-flex justify-content-center">
+                  {% if results.has_previous %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ results.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                  {% endif %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ results.number }}" class="page-link active">{{ results.number }}</a></li>
+                  {% if results.has_next %}
+                  <li class="page-item"><a href="?{{ page_request_variable }}={{ results.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+           {% endif %}
+          </div>
+        </main>
+        <aside class="col-lg-4">
+          <!-- Widget [Search Bar Widget]-->
+          <div class="widget search">
+            <header>
+              <h3 class="h6">Search the blog</h3>
+            </header>
+            <form action="{% url 'search' %}" class="search-form">
+              <div class="form-group">
+                <input type="text" name="search" placeholder="What are you looking for?">
+                <select name="category" class="custom-select">
+                  <option value="blog" selected>Blog</option>
+                  <option value="account">Account</option>
+                </select>
+                <button type="submit" class="submit"><i class="icon-search"></i></button>
+              </div>
+            </form>
+          </div>
+        </aside>
+      </div>
+ </div>
+
+{% endblock content %}
