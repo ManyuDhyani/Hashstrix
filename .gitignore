@@ -1,2 +1,10 @@
 database/
 settings.ini
+venv/
+.idea/hashstrix.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/.gitignore
