@@ -8,3 +8,6 @@ venv/
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/.gitignore
+hashstrix/__pycache__/settings.cpython-39.pyc
+hashstrix/__pycache__/urls.cpython-39.pyc
+hashstrix/__pycache__/__init__.cpython-39.pyc
