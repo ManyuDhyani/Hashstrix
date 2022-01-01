@@ -22,6 +22,7 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='profilePictures/%Y/%m/%d/', default="img/profile2.png", null=True, blank=True)
     slug = models.SlugField(max_length=250, null=True, blank=True)
+    verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
