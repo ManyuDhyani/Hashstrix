@@ -197,6 +197,7 @@ post_delete.connect(Comment.user_deleted_reply_on_comment, sender=Comment)
 class PostView(models.Model):
     ip = models.CharField(max_length=50)
     post = models.ForeignKey(Post,  on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return 'Viewed by {} -> post {}'.format(self.ip, self.post)

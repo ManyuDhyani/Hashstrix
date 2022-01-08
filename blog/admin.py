@@ -19,6 +19,8 @@ admin.site.register(Post, PostHistoryAdmin)
 
 admin.site.register(Comment)
 
-admin.site.register(PostView)
+class PostViewAdmin(SimpleHistoryAdmin):
+    list_display = ["id", "ip", 'post', 'timestamp']
+admin.site.register(PostView, PostViewAdmin)
 
 admin.site.register(Like)
