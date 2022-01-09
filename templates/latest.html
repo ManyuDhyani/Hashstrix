@@ -21,86 +21,11 @@
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
                       <div class="category">
-                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
-                       </div>
-                  </div><a href="{{article.get_absolute_url}}">
-                    <h3 class="h4">{{ article.title }}</h3></a>
-                  <p class="text-muted">{{ article.overview }}</p>
-                  <footer class="post-footer d-flex align-items-center">
-                    <a href="{{article.author.get_absolute_url}}" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="{{ article.author.profile_picture.url }}" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>{{ article.author.user.username }} {% if article.author.verified %}<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                      width="14" height="14"
-                      viewBox="0 0 172 172"
-                      style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#3498db"><path d="M158.89217,80.84717l-6.33533,-6.55033c-4.60817,-4.76583 -6.76533,-11.395 -5.83367,-17.95967l1.27567,-9.02283c0.559,-3.956 -2.12133,-7.63967 -6.05583,-8.33483l-8.97267,-1.57667c-6.52883,-1.14667 -12.169,-5.23883 -15.27933,-11.10117l-4.27133,-8.04817c-1.8705,-3.51167 -6.20633,-4.9235 -9.78967,-3.16767l-8.18433,3.999c-5.9555,2.90967 -12.92867,2.90967 -18.88417,0l-8.1915,-3.999c-3.58333,-1.75583 -7.91917,-0.344 -9.78967,3.182l-4.27133,8.04817c-3.11033,5.86233 -8.74333,9.9545 -15.27933,11.10117l-8.97267,1.57667c-3.9345,0.688 -6.61483,4.37167 -6.05583,8.32767l1.27567,9.02283c0.93167,6.56467 -1.2255,13.19383 -5.83367,17.95967l-6.33533,6.55033c-2.78067,2.87383 -2.78067,7.42467 0,10.2985l6.33533,6.55033c4.60817,4.76583 6.76533,11.395 5.83367,17.95967l-1.27567,9.02283c-0.559,3.956 2.12133,7.63967 6.05583,8.33483l8.97267,1.57667c6.52883,1.14667 12.169,5.23883 15.27933,11.10117l4.27133,8.04817c1.8705,3.526 6.20633,4.93783 9.79683,3.182l8.18433,-3.999c5.9555,-2.90967 12.92867,-2.90967 18.88417,0l8.18433,3.999c3.5905,1.75583 7.91917,0.344 9.79683,-3.182l4.27133,-8.04817c3.11033,-5.85517 8.74333,-9.9545 15.27933,-11.10117l8.97267,-1.57667c3.9345,-0.688 6.61483,-4.37883 6.05583,-8.33483l-1.27567,-9.02283c-0.93167,-6.56467 1.2255,-13.19383 5.83367,-17.95967l6.33533,-6.55033c2.76633,-2.87383 2.76633,-7.43183 -0.00717,-10.30567zM73.7665,112.56683l-16.43317,-16.43317c-2.795,-2.795 -2.795,-7.33867 0,-10.13367v0c2.795,-2.795 7.33867,-2.795 10.13367,0l11.36633,11.36633l32.86633,-32.86633c2.795,-2.795 7.33867,-2.795 10.13367,0v0c2.795,2.795 2.795,7.33867 0,10.13367l-37.93317,37.93317c-2.795,2.795 -7.33867,2.795 -10.13367,0z"></path></g></g></svg>{% endif %}</span></div>
-                    </a>
-                    <div class="views"><i class="icon-eye"></i>{{ article.views }}</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>{{ article.comment_count }}</div>
-                  </footer>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            <!-- Pagination -->
-            {% if article_list %}
-              <nav aria-label="Page navigation example">
-                <ul class="pagination pagination-template d-flex justify-content-center">
-                  {% if article_list.has_previous %}
-                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                  {% endif %}
-                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.number }}" class="page-link active">{{ article_list.number }}</a></li>
-                  {% if article_list.has_next %}
-                  <li class="page-item"><a href="?{{ page_request_variable }}={{ article_list.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-                  {% endif %}
-                </ul>
-              </nav>
-            {% endif %}
-          </div>
-          <br>
-          <br>
-      
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- hashstrix ad unit 3 H ---->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-2628743927618961"
-             data-ad-slot="4424831489"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        
-        </main>
-        
-      </div>
-    </div>
-
-{% endblock content %}
-{% extends 'base.html' %}
-    {% block title %}
-    <title>
-         Latest
-    </title>
-    {% endblock %}
-
-{% load timesince_filter %} 
-{% block content %}
-    <div class="container">
-      <div class="row">
-        <!-- Latest Posts -->
-        <main class="posts-listing col-lg-12">
-          <div class="container">
-            <div class="row">
-              <!-- post -->
-              {% for article in article_list %}
-              <div class="post col-xl-4">
-                <div class="post-thumbnail"><a href="{{article.get_absolute_url}}"><img src="{{ article.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                  <div class="post-meta d-flex justify-content-between">
-                    <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
-                      <div class="category">
-                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                        {% if article.category.id != 18 %}
+                          <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                        {% else %}
+                          <a href="{% url 'post_list_by_category' article.category.slug %}" style="font-size: 11px;">{{ article.category }}</a>
+                        {% endif %}
                        </div>
                   </div><a href="{{article.get_absolute_url}}">
                     <h3 class="h4">{{ article.title }}</h3></a>

@@ -20,9 +20,13 @@
                 <div class="post-thumbnail"><a href="{{article.get_absolute_url}}"><img src="{{ article.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
-                    <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
+                    <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} Ago</div>
                       <div class="category">
-                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                        {% if article.category.id != 18 %}
+                          <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                        {% else %}
+                          <a href="{% url 'post_list_by_category' article.category.slug %}" style="font-size: 11px;">{{ article.category }}</a>
+                        {% endif %}
                        </div>
                   </div><a href="{{article.get_absolute_url}}">
                     <h3 class="h4">{{ article.title }}</h3></a>

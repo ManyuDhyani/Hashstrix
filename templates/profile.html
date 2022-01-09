@@ -343,7 +343,7 @@ a, button, code, div, img, input, label, li, p, pre, select, span, svg, table, t
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date"><i class="icon-clock"></i>{{ article.timestamp|timesince|upto:',' }} ago</div>
                       <div class="category">
-                        <a href="{% url 'post_list_by_category' article.category.slug %}">{{ article.category }}</a>
+                        <a href="{% url 'post_list_by_category' article.category.slug %}" style="font-size: 10px;">{{ article.category }}</a>
                        </div>
                   </div><a href="{{article.get_absolute_url}}">
                     <h3 class="h4">{{ article.title }}</h3></a>
