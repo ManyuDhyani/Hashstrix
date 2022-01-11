@@ -9,11 +9,11 @@
 {% load timesince_filter %}    
 {% block content %}
     <!-- Hero Section-->
-    <section style="background: url({% static 'img/skys.jpg' %}); background-size: cover; background-position: center center" class="hero">
+    <section style="background: url({% static 'img/final.jpg' %}); background-size: cover; background-position: center center" class="hero">
       <div class="container">
         <div class="row">
           <div class="col-lg-7">
-              <h1>{{quotes.line1}} {% if quotes.line2 %}<small class="form-text text-muted">{{quotes.line2}}</small>{% endif %}</h1><a href="{% url 'blog-list' %}" class="hero-link">Discover More</a>
+              <h1>{{quotes.line1}} {% if quotes.line2 %}<br><small>{{quotes.line2}}</small>{% endif %}</h1><a href="{% url 'announcements' %}" class="hero-link">Discover More</a><!--class="form-text text-muted"-->
           </div>
         </div><a href=".intro" class="continue link-scroll"><i class="fa fa-long-arrow-down"></i> Scroll Down</a>
       </div>

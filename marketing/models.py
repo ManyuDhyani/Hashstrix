@@ -43,3 +43,9 @@ class Quotes(models.Model):
 
     class Meta:
         verbose_name_plural = "Home Quotes"
+        
+class Announcement(models.Model):
+    content = RichTextUploadingField()
+
+    class Meta:
+        verbose_name_plural = "Announcement"

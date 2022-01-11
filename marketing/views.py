@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from blog.models import Post
 from .forms import SendPostForm
-from .models import HowItWorks, TermsCondition, CommunityGuidelines, PrivacyPolicy
+from .models import HowItWorks, TermsCondition, CommunityGuidelines, PrivacyPolicy, Announcement
 from hashstrix.settings import EMAIL_HOST_USER
 
 def post_share(request, slug):
@@ -76,6 +76,10 @@ def community_guidelines(request):
 def privacy_policy(request):
     obj = PrivacyPolicy.objects.first()
     return render(request, 'PrivacyPolicy.html', {'obj': obj})
+    
+def announcements(request):
+    obj = Announcement.objects.first()
+    return render(request, 'announcement.html', {'obj': obj})
 
 def plain_text_view(request):
     file = open("/home/manyu/hashstrixdir/static/ads.txt", 'r')

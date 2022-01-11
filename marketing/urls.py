@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import post_share, how_it_works, terms_condition, community_guidelines, privacy_policy, plain_text_view
+from .views import post_share, how_it_works, terms_condition, community_guidelines, privacy_policy, announcements, plain_text_view
 
 urlpatterns = [
     path('share/<slug>', post_share, name='share'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('community-guidelines', community_guidelines, name='community-guidelines'),
     path('privacy-policy', privacy_policy, name='privacy-policy'),
     path('ads.txt', plain_text_view, name='ads'),
+    path('announcements', announcements, name='announcements'),
 ]
