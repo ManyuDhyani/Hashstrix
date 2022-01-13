@@ -49,7 +49,7 @@ Here's the footer for the site.
 
 ![](static/img/images/footer.png)
 
-Here are some page to show that the site has mobile responsive pages. The page below are blog, article and profile page.
+Here are some page to show that the site has mobile responsive pages. The pages below are blog, article and profile page respectively.
 
 ![](static/img/images/main%20menu.jpg)
 
