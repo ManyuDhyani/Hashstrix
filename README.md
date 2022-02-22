@@ -55,4 +55,4 @@ Here are some page to show that the site has mobile responsive pages. The pages 
 
 ![](static/img/images/article.jpg)
 
-![](static/img/images/mprofile.png)
+![](static/img/images/mprofile.jpg)
