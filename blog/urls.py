@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     index, blog, post, search,
     post_create, post_update, post_delete,
-    trending, latest, delete_comment, like_unlike_post
+    trending, latest, delete_comment, like_unlike_post,
+    PostList, PostUpdateDelete
 )
 
 urlpatterns = [
@@ -19,4 +20,8 @@ urlpatterns = [
     path('post/<slug>/delete/', post_delete, name='post-delete'),
     path('comment', delete_comment, name='delete-comment'),
     path('liked/', like_unlike_post, name='like-post-view'),
+
+    #API URLs
+    path('api/blogs/', PostList.as_view()),
+    path('api/blog/<int:pk>', PostUpdateDelete.as_view()),
 ]

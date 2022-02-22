@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'taggit',
     'user_visit',
     'simple_history',
+    'rest_framework',
 
 
     'author',
