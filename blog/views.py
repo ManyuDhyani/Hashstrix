@@ -13,6 +13,9 @@ from taggit.models import Tag
 from .forms import CommentForm, PostForm
 from marketing.models import Quotes
 
+from .serializers import PostSerializer
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+
 #from django.conf import settings
 #from django.core.cache.backends.base import DEFAULT_TIMEOUT
 #from django.views.decorators.cache import cache_page
@@ -25,6 +28,16 @@ def get_author(user):
     if author.exists():
         return author[0]
     return None
+
+#API Functions
+class PostList(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostUpdateDelete(RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
     
 def AllCategories(request):
     categories = Category.objects.all()
