@@ -38,7 +38,17 @@ class PostList(ListAPIView):
 class PostUpdateDelete(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    
+
+
+class TrendingList(ListAPIView):
+    d = date.today() - timedelta(days=60)
+    trending = Post.objects.filter(status='public', date__gte=d)
+    views = PostView.objects.filter(post__in=[p for p in trending]).values("post").annotate(post_count=Count('post')).order_by('-post_count')
+    pk_list = [v['post'] for v in views]
+    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pk_list)])
+    queryset = Post.objects.filter(pk__in=pk_list).order_by(preserved)
+    serializer_class = PostSerializer
+
 def AllCategories(request):
     categories = Category.objects.all()
     print(categories)

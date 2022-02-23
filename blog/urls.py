@@ -3,7 +3,7 @@ from .views import (
     index, blog, post, search,
     post_create, post_update, post_delete,
     trending, latest, delete_comment, like_unlike_post,
-    PostList, PostUpdateDelete
+    PostList, PostUpdateDelete, TrendingList
 )
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     #API URLs
     path('api/blogs/', PostList.as_view()),
     path('api/blog/<int:pk>', PostUpdateDelete.as_view()),
+    path('api/trending/', TrendingList.as_view()),
 ]
