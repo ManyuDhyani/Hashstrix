@@ -3,7 +3,7 @@ from .views import (
     index, blog, post, search,
     post_create, post_update, post_delete,
     trending, latest, delete_comment, like_unlike_post,
-    PostList, PostUpdateDelete, TrendingList
+    PostList, PostUpdateDelete, TrendingList, AuthorList, AuthorUpdateDelete
 )
 
 urlpatterns = [
@@ -25,4 +25,6 @@ urlpatterns = [
     path('api/blogs/', PostList.as_view()),
     path('api/blog/<int:pk>', PostUpdateDelete.as_view()),
     path('api/trending/', TrendingList.as_view()),
+    path('api/authors/', AuthorList.as_view()),
+    path('api/author/<int:pk>', AuthorUpdateDelete.as_view()),
 ]

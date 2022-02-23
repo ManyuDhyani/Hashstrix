@@ -13,7 +13,7 @@ from taggit.models import Tag
 from .forms import CommentForm, PostForm
 from marketing.models import Quotes
 
-from .serializers import PostSerializer
+from .serializers import PostSerializer, AuthorSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 
 #from django.conf import settings
@@ -48,6 +48,14 @@ class TrendingList(ListAPIView):
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pk_list)])
     queryset = Post.objects.filter(pk__in=pk_list).order_by(preserved)
     serializer_class = PostSerializer
+    
+class AuthorList(ListAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    
+class AuthorUpdateDelete(RetrieveUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 
 def AllCategories(request):
     categories = Category.objects.all()
