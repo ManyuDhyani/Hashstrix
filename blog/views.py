@@ -6,14 +6,15 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Case, When
 from datetime import date, timedelta
 
-from .models import Post, Category, Author, PostView, Comment, Like
+from .models import Post, Category, Author, PostView, Comment, Like, User
 from author.models import Profile, Followers
 from marketing.models import Signup
 from taggit.models import Tag
 from .forms import CommentForm, PostForm
 from marketing.models import Quotes
 
-from .serializers import PostSerializer, AuthorSerializer
+
+from .serializers import PostSerializer, AuthorSerializer, AuthUserSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 
 #from django.conf import settings
@@ -28,18 +29,17 @@ def get_author(user):
     if author.exists():
         return author[0]
     return None
-
-#API Functions
+ 
+#API Functions    
 class PostList(ListAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.filter(status='public').order_by('-timestamp')
     serializer_class = PostSerializer
 
 
 class PostUpdateDelete(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-
+    
 class TrendingList(ListAPIView):
     d = date.today() - timedelta(days=60)
     trending = Post.objects.filter(status='public', date__gte=d)
@@ -57,6 +57,10 @@ class AuthorUpdateDelete(RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
+class UserList(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = AuthUserSerializer
+
 def AllCategories(request):
     categories = Category.objects.all()
     print(categories)
@@ -72,7 +76,7 @@ def page_not_found(request, exception):
 def index(request):
     quotes = Quotes.objects.first()
 
-    d = date.today() - timedelta(days=90)
+    d = date.today() - timedelta(days=30)
     trending = Post.objects.filter(status='public', date__gte=d)
     views = PostView.objects.filter(post__in=[p for p in trending]).values("post").annotate(post_count=Count('post')).order_by('-post_count')
     pk_list = [v['post'] for v in views]
@@ -318,7 +322,7 @@ def post_delete(request, slug):
     return redirect(reverse("blog-list"))
 
 def trending(request):
-    d = date.today() - timedelta(days=90)
+    d = date.today() - timedelta(days=60)
 
     trending = Post.objects.filter(status='public', date__gte=d)
 
