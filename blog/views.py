@@ -14,7 +14,7 @@ from .forms import CommentForm, PostForm
 from marketing.models import Quotes
 
 
-from .serializers import PostSerializer, AuthorSerializer, AuthUserSerializer
+from .serializers import PostSerializer, AuthorSerializer, AuthUserSerializer, TraveloftindiaPostSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 
 #from django.conf import settings
@@ -60,6 +60,10 @@ class AuthorUpdateDelete(RetrieveUpdateDestroyAPIView):
 class UserList(ListAPIView):
     queryset = User.objects.all()
     serializer_class = AuthUserSerializer
+
+class traveloftindiaBlogs(ListAPIView):
+    queryset = Post.objects.filter(tags__name__in=['traveloft', 'traveloftindia']).order_by('-timestamp').distinct()[:3]
+    serializer_class = TraveloftindiaPostSerializer
 
 def AllCategories(request):
     categories = Category.objects.all()

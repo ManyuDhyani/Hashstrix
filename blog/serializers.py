@@ -21,3 +21,8 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'overview', 'timestamp', 'content', 'thumbnail', 'category', 'author']
 
+class TraveloftindiaPostSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
+    class Meta:
+        model = Post
+        fields = ['title', 'overview', 'timestamp', 'thumbnail', 'author']

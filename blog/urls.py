@@ -3,7 +3,7 @@ from .views import (
     index, blog, post, search,
     post_create, post_update, post_delete,
     trending, latest, delete_comment, like_unlike_post,
-    PostList, PostUpdateDelete, TrendingList, AuthorList, AuthorUpdateDelete, UserList
+    PostList, PostUpdateDelete, TrendingList, AuthorList, AuthorUpdateDelete, UserList, traveloftindiaBlogs
 )
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/authors/', AuthorList.as_view()),
     path('api/author/<int:pk>', AuthorUpdateDelete.as_view()),
     path('api/users/', UserList.as_view()),
+    path('api/traveloftindia/', traveloftindiaBlogs.as_view()),
 ]
