@@ -25,4 +25,4 @@ class TraveloftindiaPostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     class Meta:
         model = Post
-        fields = ['title', 'overview', 'timestamp', 'thumbnail', 'author']
+        fields = ['title', 'overview', 'timestamp', 'thumbnail', 'author', 'slug']
