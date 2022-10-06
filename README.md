@@ -51,8 +51,8 @@ Here's the footer for the site.
 
 Here are some page to show that the site has mobile responsive pages. The pages below are blog, article and profile page respectively.
 
-![](static/img/images/main%20menu.jpg)
+<img src="static/img/images/main%20menu.jpg" height="600">
 
-![](static/img/images/article.jpg)
+<img src="static/img/images/article.jpg" height="600">
 
-![](static/img/images/mprofile.jpg)
+<img src="static/img/images/mprofile.jpg" height="600">
